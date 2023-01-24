@@ -11,37 +11,18 @@ const team1 = [
     { name: "Leo", specialization: "Artist"}
 ]
 
-const calculateTeamFinanceReport = (salaries, team) => {
+const specialization1 = {}
+
+const calculateTeamFinanceReport = (salaries, team, specialization) => {
     let totalBudgetTeam = 0;
-    let sumTax = 0;
-    let totalBudgetManager = 0;
-    let totalBudgetDesigner = 0;
-    let totalBudgetArtist = 0;
+    for (key in salaries) {
+        let res = salaries[key].salary * parseInt(salaries[key].tax) / 100;
+        totalBudgetTeam += salaries[key].salary + res;
+        specialization[key] = salaries[key].salary;
+    }
 
-    team.forEach(element => {
-        for (key in salaries) {
-            if (element.specialization === `${key}`) {
-                if (element.specialization === `Manager`) {
-                    totalBudgetManager += salaries[key].salary;
-                }
-
-                if (element.specialization === `Designer`) {
-                    totalBudgetDesigner += salaries[key].salary;
-                }
-
-                if (element.specialization === `Artist`) {
-                    totalBudgetArtist += salaries[key].salary;
-                }
-
-                let res = salaries[key].salary * salaries[key].tax.split('%')[0] / 100;
-                sumTax += res;
-                totalBudgetTeam += salaries[key].salary;
-            }
-        }
-    });
-
-    return `totalBudgetTeam = ${totalBudgetTeam + sumTax}, totalBudgetManager = ${totalBudgetManager}, totalBudgetDesigner = ${totalBudgetDesigner}, totalBudgetArtist = ${totalBudgetArtist}`;
+    return `totalBudgetTeam = ${totalBudgetTeam}, totalBudgetManager = ${specialization['Manager']}, totalBudgetDesigner = ${specialization['Designer']}, totalBudgetArtist = ${specialization['Artist']}`;
 }
 
-const financeReport1 = calculateTeamFinanceReport(salaries1, team1)
+const financeReport1 = calculateTeamFinanceReport(salaries1, team1, specialization1);
 console.log(JSON.stringify(financeReport1))
