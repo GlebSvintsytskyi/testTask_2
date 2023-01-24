@@ -1,17 +1,23 @@
-const salaries1 = {
+const salaries = {
     Manager: { salary: 1000, tax: "10%" },
     Designer: { salary: 600, tax: "30%" },
-    Artist: { salary: 1500, tax: "15%" }
+    Artist: { salary: 1500, tax: "15%" },
+    TeamLead: { salary: 1000, tax: "99%" },
+    Architect: { salary: 9000, tax: "34%" },
 }
 
-const team1 = [
+const team = [
     { name: "Misha", specialization: "Manager" },
     { name: "Max", specialization: "Designer" },
     { name: "Vova", specialization: "Designer"},
-    { name: "Leo", specialization: "Artist"}
+    { name: "Leo", specialization: "Artist"},
+    { name: "Alexander", specialization: "TeamLead" },
+    { name: "Gaudi", specialization: "Architect" },
+    { name: "Koolhas", specialization: "Architect" },
+    { name: "Foster", specialization: "Architect" },
 ]
 
-const specialization1 = {}
+const specialization = {}
 
 const calculateTeamFinanceReport = (salaries, team, specialization) => {
     if (team.length >= 1 && team.length <= 100 && Object.keys(salaries).length >= 1 && Object.keys(salaries).length <= 10) {
@@ -25,12 +31,14 @@ const calculateTeamFinanceReport = (salaries, team, specialization) => {
             } else {
                 specialization[e.specialization] =  salaries[e.specialization].salary + res;
             }
-    });
-        return `totalBudgetTeam = ${totalBudgetTeam}, totalBudgetManager = ${specialization['Manager']}, totalBudgetDesigner = ${specialization['Designer']}, totalBudgetArtist = ${specialization['Artist']}`;
+    }); 
+        console.log(`totalBudgetTeam = ${totalBudgetTeam}`)
+        for (key in specialization) {
+            console.log(`totalBudget${key} = ${specialization[key]}`);
+        }
     } else {
         console.error('minimum specializations amount is 1, maximum up to 10 and minimal team size is 1, maximum up to 100');
     }
 }
 
-const financeReport1 = calculateTeamFinanceReport(salaries1, team1, specialization1);
-console.log(JSON.stringify(financeReport1))
+calculateTeamFinanceReport(salaries, team, specialization);
