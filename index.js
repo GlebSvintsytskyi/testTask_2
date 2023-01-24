@@ -15,11 +15,16 @@ const specialization1 = {}
 
 const calculateTeamFinanceReport = (salaries, team, specialization) => {
     let totalBudgetTeam = 0;
-    for (key in salaries) {
-        let res = salaries[key].salary * parseInt(salaries[key].tax) / 100;
-        totalBudgetTeam += salaries[key].salary + res;
-        specialization[key] = salaries[key].salary;
-    }
+    team.forEach(e => {
+        let res = salaries[e.specialization].salary * parseInt(salaries[e.specialization].tax) / 100;
+        totalBudgetTeam += salaries[e.specialization].salary + res;
+        let status = specialization.hasOwnProperty(e.specialization);
+        if (status) {
+            specialization[e.specialization] += salaries[e.specialization].salary + res;
+        } else {
+            specialization[e.specialization] =  salaries[e.specialization].salary + res;
+        }
+    });
 
     return `totalBudgetTeam = ${totalBudgetTeam}, totalBudgetManager = ${specialization['Manager']}, totalBudgetDesigner = ${specialization['Designer']}, totalBudgetArtist = ${specialization['Artist']}`;
 }
