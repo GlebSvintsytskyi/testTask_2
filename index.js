@@ -1,38 +1,35 @@
 const salaries = {
-    Manager: { salary: 1000, tax: "10%" },
-    Designer: { salary: 600, tax: "30%" },
-    Artist: { salary: 1500, tax: "15%" },
     TeamLead: { salary: 1000, tax: "99%" },
     Architect: { salary: 9000, tax: "34%" },
 }
 
 const team = [
-    { name: "Misha", specialization: "Manager" },
-    { name: "Max", specialization: "Designer" },
-    { name: "Vova", specialization: "Designer"},
-    { name: "Leo", specialization: "Artist"},
     { name: "Alexander", specialization: "TeamLead" },
     { name: "Gaudi", specialization: "Architect" },
     { name: "Koolhas", specialization: "Architect" },
     { name: "Foster", specialization: "Architect" },
+    { name: "Napoleon", specialization: "General" },
 ]
 
-const specialization = {}
-
-const calculateTeamFinanceReport = (salaries, team, specialization) => {
+const calculateTeamFinanceReport = (salaries, team) => {
     if (team.length >= 1 && team.length <= 100 && Object.keys(salaries).length >= 1 && Object.keys(salaries).length <= 10) {
+        const specialization = {};
         let totalBudgetTeam = 0;
         team.forEach(e => {
-            let res = salaries[e.specialization].salary * parseInt(salaries[e.specialization].tax) / 100;
-            totalBudgetTeam += salaries[e.specialization].salary + res;
-            let status = specialization.hasOwnProperty(e.specialization);
-            if (status) {
-                specialization[e.specialization] += salaries[e.specialization].salary + res;
+            if (salaries.hasOwnProperty(e.specialization)) {
+                let res = salaries[e.specialization].salary * parseInt(salaries[e.specialization].tax) / 100;
+                totalBudgetTeam += salaries[e.specialization].salary + res;
+                let status = specialization.hasOwnProperty(e.specialization);
+                if (status) {
+                    specialization[e.specialization] += salaries[e.specialization].salary + res;
+                } else {
+                    specialization[e.specialization] =  salaries[e.specialization].salary + res;
+                }
             } else {
-                specialization[e.specialization] =  salaries[e.specialization].salary + res;
+                return;
             }
     }); 
-        console.log(`totalBudgetTeam = ${totalBudgetTeam}`)
+        console.log(`totalBudgetTeam = ${totalBudgetTeam}`);
         for (key in specialization) {
             console.log(`totalBudget${key} = ${specialization[key]}`);
         }
@@ -41,4 +38,4 @@ const calculateTeamFinanceReport = (salaries, team, specialization) => {
     }
 }
 
-calculateTeamFinanceReport(salaries, team, specialization);
+calculateTeamFinanceReport(salaries, team);
